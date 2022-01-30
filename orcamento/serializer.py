@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueForMonthValidator
 from orcamento.models import Receita, Despesa
-from django.db.models.functions import ExtractMonth, ExtractYear
 
 
 class ReceitaSerializer(serializers.ModelSerializer):
@@ -21,7 +20,7 @@ class ReceitaSerializer(serializers.ModelSerializer):
 class DespesaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Despesa
-        fields = ['id', 'descricao', 'valor', 'data']
+        fields = ['id', 'descricao', 'valor', 'data', 'categoria']
 
         validators = [
             UniqueForMonthValidator(
