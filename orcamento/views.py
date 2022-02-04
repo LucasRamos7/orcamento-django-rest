@@ -1,6 +1,8 @@
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics, filters
+from rest_framework.filters import SearchFilter
 from orcamento.models import Receita, Despesa
 from orcamento.serializer import ReceitaSerializer, DespesaSerializer
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class ReceitasViewSet(viewsets.ModelViewSet):
@@ -8,6 +10,9 @@ class ReceitasViewSet(viewsets.ModelViewSet):
 
     queryset = Receita.objects.all()
     serializer_class = ReceitaSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_param = ['descricao']
+    search_fields = ['descricao']
 
 
 class DespesasViewSet(viewsets.ModelViewSet):
@@ -15,6 +20,8 @@ class DespesasViewSet(viewsets.ModelViewSet):
 
     queryset = Despesa.objects.all()
     serializer_class = DespesaSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['descricao']
 
 
 class ListaReceitasMes(generics.ListAPIView):
@@ -37,3 +44,20 @@ class ListaDespesasMes(generics.ListAPIView):
         return queryset
 
     serializer_class = DespesaSerializer
+
+
+class BuscaReceitas(generics.ListAPIView):
+    queryset = Receita.objects.all()
+    serializer_class = ReceitaSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends[1].search_param = 'descricao'
+    search_fields = ['descricao']
+
+
+class BuscaDespesas(generics.ListAPIView):
+    queryset = Despesa.objects.all()
+    serializer_class = DespesaSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends[1].search_param = 'descricao'
+    search_fields = ['descricao']
+
