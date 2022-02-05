@@ -18,9 +18,11 @@ class ReceitaSerializer(serializers.ModelSerializer):
 
 
 class DespesaSerializer(serializers.ModelSerializer):
+    nome_categoria = serializers.SerializerMethodField()
+
     class Meta:
         model = Despesa
-        fields = ['id', 'descricao', 'valor', 'data', 'categoria']
+        fields = ['id', 'descricao', 'valor', 'data', 'nome_categoria']
 
         validators = [
             UniqueForMonthValidator(
@@ -29,3 +31,6 @@ class DespesaSerializer(serializers.ModelSerializer):
                 date_field='data'
             )
         ]
+
+    def get_nome_categoria(self, obj):
+        return obj.get_categoria_display()

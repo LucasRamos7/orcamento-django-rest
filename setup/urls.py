@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from orcamento.views import ReceitasViewSet,\
-    DespesasViewSet, ListaReceitasMes, ListaDespesasMes, BuscaReceitas, BuscaDespesas
+    DespesasViewSet, ListaReceitasMes, ListaDespesasMes, BuscaReceitas, BuscaDespesas, ResumoView
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -14,5 +14,6 @@ urlpatterns = [
     path('receitas/<int:ano>/<int:mes>/', ListaReceitasMes.as_view()),
     path('despesas/<int:ano>/<int:mes>/', ListaDespesasMes.as_view()),
     path('receitas?descricao=<slug:pk>', BuscaReceitas.as_view()),
-    path('despesas?descricao=<slug:pk>', BuscaDespesas.as_view())
+    path('despesas?descricao=<slug:pk>', BuscaDespesas.as_view()),
+    path('resumo/<int:ano>/<int:mes>/', ResumoView.as_view())
 ]
