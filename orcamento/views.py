@@ -1,10 +1,13 @@
 from rest_framework import viewsets, generics, filters
 from orcamento.models import Receita, Despesa
-from orcamento.serializer import ReceitaSerializer, DespesaSerializer
+from orcamento.serializer import ReceitaSerializer, DespesaSerializer, UsuarioSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import Sum
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import BasicAuthentication
+from django.contrib.auth.models import User
 
 
 class ReceitasViewSet(viewsets.ModelViewSet):
@@ -16,6 +19,9 @@ class ReceitasViewSet(viewsets.ModelViewSet):
     search_param = ['descricao']
     search_fields = ['descricao']
 
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [BasicAuthentication]
+
 
 class DespesasViewSet(viewsets.ModelViewSet):
     """Exibindo todas as despesas"""
@@ -24,6 +30,19 @@ class DespesasViewSet(viewsets.ModelViewSet):
     serializer_class = DespesaSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['descricao']
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [BasicAuthentication]
+
+
+class ListaUmaReceita(generics.ListAPIView):
+    """Exibindo uma receita"""
+
+    def get_queryset(self):
+        queryset = Receita.objects.filter(id=self.kwargs['pk'])
+        return queryset
+
+    serializer_class = ReceitaSerializer
 
 
 class ListaReceitasMes(generics.ListAPIView):
