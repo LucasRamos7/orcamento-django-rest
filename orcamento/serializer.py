@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueForMonthValidator
 from orcamento.models import Receita, Despesa
-from django.contrib.auth.models import User
 
 
 class ReceitaSerializer(serializers.ModelSerializer):

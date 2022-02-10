@@ -1,13 +1,12 @@
 from rest_framework import viewsets, generics, filters
 from orcamento.models import Receita, Despesa
-from orcamento.serializer import ReceitaSerializer, DespesaSerializer, UsuarioSerializer
+from orcamento.serializer import ReceitaSerializer, DespesaSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import Sum
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
-from django.contrib.auth.models import User
 
 
 class ReceitasViewSet(viewsets.ModelViewSet):
