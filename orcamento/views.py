@@ -1,6 +1,6 @@
 from rest_framework import viewsets, generics, filters
 from orcamento.models import Receita, Despesa
-from orcamento.serializer import ReceitaSerializer, DespesaSerializer
+from orcamento.serializer import ReceitaSerializer, DespesaSerializer, UsuarioSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -104,3 +104,11 @@ class ResumoView(APIView):
             'saldo_final': saldo_final,
             'despesa_por_categoria': despesa_por_categoria
         })
+
+
+class CadastroUsuario(viewsets.ModelViewSet):
+    http_method_names = ['post']
+    serializer_class = UsuarioSerializer
+    queryset = None
+
+
