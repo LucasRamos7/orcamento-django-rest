@@ -3,6 +3,8 @@ venv/
 db.sqlite3
 orcamento/__pycache__/
 setup/__pycache__/
+secrets.json
+staticfiles/
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/pycharm+all
